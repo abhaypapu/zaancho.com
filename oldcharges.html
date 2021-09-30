@@ -1,0 +1,1397 @@
+
+  
+<html>
+<head>
+    <title>CHARGE CALCULATOR</title>
+	<meta charset="utf-8" />
+     <link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen" />
+    <link href="css/font-awesome.min.css" rel="stylesheet" media="screen" />
+    <link href="css/animate.css" rel="stylesheet" media="screen" />
+    <link href="JqueryUI/themes/base/jquery-ui.css" rel="stylesheet" />
+    <script src="JqueryUI/jquery-1.9.1.js"></script>
+    <script src="bootstrap/js/bootstrap.js"></script>
+
+    <style>
+    .tblecalc,.panel
+    {
+    -webkit-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.75);
+box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.75);
+}
+    
+    </style>
+    <script type="text/javascript">
+       
+function clearall()
+{
+    for (var j = 1; j <= document.frmcal.rectotal.value; j++)
+	{
+		
+		box_ins = eval("document.frmcal.ch" + j); 
+		box_ins.checked=false;
+		box1 = eval("document.frmcal.sample" + j); 
+		box1.value="1";
+
+	}
+document.frmcal.ins_charges.value="0"; 
+document.frmcal.ins_service_tax.value="0";
+document.frmcal.ins_total_charges.value = "0";
+document.frmcal.ins_service_taxc.value = "0";
+	   
+
+document.frmcal.uni_charges.value="0"; 
+document.frmcal.uni_service_tax.value = "0";
+document.frmcal.uni_service_taxc.value = "0";
+
+document.frmcal.uni_total_charges.value="0";
+
+document.frmcal.nlab_charges.value="0"; 
+document.frmcal.nlab_service_tax.value="0";
+document.frmcal.nlab_total_charges.value="0";
+
+
+}
+
+function calculation()
+{
+var servicetax=document.frmcal.Per_Service_Tax.value;
+var servicetaxc = document.frmcal.Per_Service_TaxC.value;
+	var ins_sum_charges=0,uni_sum_charges=0,nlab_sum_charges=0;
+	var ch_ins=0;
+	var ch_uni=0;
+	var ch_nlab=0;
+	var box_ins=0;
+	var box_uni=0;
+	var box_nlab=0;
+	for (var j = 1; j <= document.frmcal.rectotal.value; j++)
+	{
+
+		box_ins = eval("document.frmcal.ch" + j); 
+
+		box_uni = eval("document.frmcal.chuni"+ j); 
+
+		box_nlab = eval("document.frmcal.chlab"+ j); 
+
+		if (box_ins.checked == true)
+		{
+			ch_ins=box_ins;
+			ch_uni=box_uni;
+			ch_nlab=box_nlab;
+			box1 = eval("document.frmcal.sample" + j); 
+			var no=box1.value;
+
+			if(isNaN(no)==false && no!="" )
+			{
+				ins_sum_charges=ins_sum_charges*1+ch_ins.value*no;
+				uni_sum_charges=uni_sum_charges*1+ch_uni.value*no;
+				nlab_sum_charges=nlab_sum_charges*1+ch_nlab.value*no;
+			}
+			else
+			{
+				alert("Enter Valid No Of Samples");
+				box1.value="";
+			}
+		}
+		//if (box_ins.checked == false)
+		//{
+		//    alert("Please check at least one check box");
+		//    return;
+		//}
+	
+}
+	var ins_servicetax=Math.round(servicetax*ins_sum_charges/100);
+	var ins_servicetax_c = Math.round(servicetaxc * ins_sum_charges / 100);
+
+	document.frmcal.ins_charges.value=ins_sum_charges;
+	document.frmcal.ins_service_tax.value = ins_servicetax;
+	document.frmcal.ins_service_taxc.value = ins_servicetax_c;
+	document.frmcal.ins_total_charges.value = ins_sum_charges + ins_servicetax + ins_servicetax_c;
+	
+	var uni_servicetax = Math.round(servicetax * uni_sum_charges / 100);
+	var uni_servicetaxc = Math.round(servicetaxc * uni_sum_charges / 100);
+	
+	document.frmcal.uni_charges.value=uni_sum_charges;
+	document.frmcal.uni_service_tax.value = uni_servicetax;
+	document.frmcal.uni_service_taxc.value = uni_servicetaxc;
+	
+	document.frmcal.uni_total_charges.value = uni_sum_charges + uni_servicetax + uni_servicetaxc;
+
+
+	var nlab_servicetax = Math.round(servicetax * nlab_sum_charges / 100);
+	var nlab_servicetaxc = Math.round(servicetaxc * nlab_sum_charges / 100);
+	
+	document.frmcal.nlab_charges.value=nlab_sum_charges;
+	document.frmcal.nlab_service_tax.value = 0;//nlab_servicetax;
+	document.frmcal.nlab_service_taxc.value = 0;//nlab_servicetaxc;
+	
+	//document.frmcal.nlab_total_charges.value = nlab_sum_charges + nlab_servicetax + nlab_servicetaxc;
+    document.frmcal.nlab_total_charges.value = nlab_sum_charges;
+
+	
+}
+
+</script>
+</head>
+<body style="background-color:#f2f2f2;">
+    <nav class="navbar navbar-default navbar-fixed-top" style="background-color:darkblue;">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+       
+           
+            <a href="#" class="navbar-brand pull-left" style="color:white;"><i class="fa fa-calendar-o"></i> CHARGE CALCULATOR</a>
+        </div>
+        <!-- Collection of nav links and other content for toggling -->
+        
+   
+</nav>
+<form id="frmcal" name="frmcal">
+
+   <INPUT TYPE="hidden" NAME="Per_Post" VALUE="100">
+      <INPUT TYPE="hidden" NAME="Per_Service_Tax" VALUE="9">
+    <INPUT TYPE="hidden" NAME="Per_Service_TaxC" VALUE="9">
+    <INPUT TYPE="hidden" NAME="rectotal" VALUE='69'>
+    
+  <br /><br /><br /><br /><br />
+
+        <table  class="table table-condensed tblecalc" style="background-color:white;width:90%;position:static;" align="center">
+     <tr height=50>
+      <td>
+     &nbsp;
+      </td>
+      <td>
+      <b>Industry</b> 
+      </td>
+      <td>
+    <b> R&D Lab,National Lab & Academic Institution</b>
+      </td>
+      <td>
+     <b>Premium Member</b>
+      </td>
+     </tr>
+     <tr height=50>
+      <td><b>Instrument Charges :</b></p>
+      </td>
+      <td><input type="text" style="border:0px;background-color:transparent;" size=15" name="ins_charges" VALUE="0" disabled="disabled"></p>
+      </td>
+      <td><input type="text" style="border:0px;background-color:transparent;" size=15" name="uni_charges" VALUE="0" disabled="disabled"></p>
+      </td>
+      <td><input type="text" style="border:0px;background-color:transparent;" size=15" name="nlab_charges" VALUE="0" disabled="disabled"></p>
+      </td>
+     </tr>
+     <tr height=50>
+      <td><b>Central Goods and Service Tax (9%): </b></p>
+      </td>
+      <td><input type="text" style="border:0px;background-color:transparent;" size=15" name="ins_service_tax" VALUE="0" disabled="disabled"></p>
+      </td>
+      <td><input type="text" style="border:0px;background-color:transparent;" size=15" name="uni_service_tax" VALUE="0" disabled="disabled"></p>
+      </td>
+      <td><input type="text" style="border:0px;background-color:transparent;" size=15" name="nlab_service_tax" VALUE="0" disabled="disabled"></p>
+      </td>
+     </tr>
+
+     <tr height=50>
+      <td>
+          <b>State Goods and Service Tax (9%): 
+          </b>
+      </td>
+      <td>
+       <font color:red face="monotype"> <blink>
+          <input type="text" style="border:0px;background-color:transparent;" size=15" name="ins_service_taxc" VALUE="0" disabled="disabled"></td>
+      <td>
+       <font color:red face="monotype"> <blink>
+          <input type="text" style="border:0px;background-color:transparent;" size=15" name="uni_service_taxc" VALUE="0" disabled="disabled"></td>
+      <td>
+       <font color:red face="monotype"> <blink>
+          <input type="text" style="border:0px;background-color:transparent;" size=15" name="nlab_service_taxc" VALUE="0" disabled="disabled"></td>
+     </tr>
+
+     <tr height=50>
+      <td><b>Total
+      Charges : </b></p>
+      </td>
+      <td><input type="text" style="border:0px;background-color:transparent;font-weight:bold;color:red;" size=15" name="ins_total_charges" VALUE="0" disabled="disabled"></p>
+      </td>
+      <td><input type="text" style="border:0px;background-color:transparent;font-weight:bold;color:red;" size=15" name="uni_total_charges" VALUE="0" disabled="disabled"></p>
+      </td>
+      <td><input type="text" style="border:0px;background-color:transparent;font-weight:bold;color:red;" size=15" name="nlab_total_charges" VALUE="0" disabled="disabled"></p>
+      </td>
+     </tr>
+
+     <tr height=50>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>
+<button id="btncalculate" type="button" class="btn btn-success" onclick="calculation();"><i class="fa fa-calendar"></i> Calculate</button>
+      &nbsp;
+<button id="btncalculate0" type="button" class="btn btn-danger" onclick="clearall();"><i class="fa fa-eraser"></i> Reset</button>
+      </td>
+     </tr>
+<tR><td><div style="float:right">
+</div></tD></tr>
+    </table>
+        <br /><br />
+
+        <center>
+        <div class="panel panel-primary" style="width:90%;border:1px;margin-left:5px;border-color:dodgerblue;background-color:white">
+        <div class="panel-heading">
+<b>Instrumental Analysis Charges</b> (<i class="fa fa-rupee"></i>)
+
+
+</div>
+        <div class="panel-body">
+                                    <table class="style1" style="width: 100%">
+                                        <tr>
+                                            <td style="height: 30px" colspan="3">
+                                                
+    <table class="table" style="font-size: 10.2pt;width:100%;">
+      <thead>
+        <tr>
+            <th></th>
+            <th>Samples</th>
+           
+            <th>Instrument</th>
+            <th>Parameter</th>
+            <th>Industry Charge</th>
+            <th>R&D Lab,National Lab & Academic Institution</th>
+            <th>Premium Member</th>
+            <th>Remarks</th>
+           
+            
+        </tr>
+      </thead>
+      <tbody>
+      <tr class ="trclass">
+        <td><input type="checkbox" value ='750' name='ch1' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample1' value="1" onchange="calculation();" /></td>
+      <td>Electrochemical Analyzer</td>
+      <td>Electrochemical behavior of samples</td>
+      <td>750</td>
+        <td>300            <input type=hidden name='chuni1' value='300' />
+        </td>
+        <td>150            <input type=hidden name='chlab1' value='150'>	
+        </td>
+        <td>Per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='750' name='ch2' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample2' value="1" onchange="calculation();" /></td>
+      <td>Spectrofluorophotometer</td>
+      <td>Flourescence spectra</td>
+      <td>750</td>
+        <td>500            <input type=hidden name='chuni2' value='500' />
+        </td>
+        <td>250            <input type=hidden name='chlab2' value='250'>	
+        </td>
+        <td>Per Sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='750' name='ch3' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample3' value="1" onchange="calculation();" /></td>
+      <td>FTIR Spectrophotometer</td>
+      <td>Functional group analysis</td>
+      <td>750</td>
+        <td>300            <input type=hidden name='chuni3' value='300' />
+        </td>
+        <td>150            <input type=hidden name='chlab3' value='150'>	
+        </td>
+        <td>Per Sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='750' name='ch4' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample4' value="1" onchange="calculation();" /></td>
+      <td>UV-VIS Spectrophotometer</td>
+      <td>Absorption spectra</td>
+      <td>750</td>
+        <td>300            <input type=hidden name='chuni4' value='300' />
+        </td>
+        <td>150            <input type=hidden name='chlab4' value='150'>	
+        </td>
+        <td>Per Sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='750' name='ch5' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample5' value="1" onchange="calculation();" /></td>
+      <td>Optical Contact Angle</td>
+      <td>Contact angles of surfaces</td>
+      <td>750</td>
+        <td>300            <input type=hidden name='chuni5' value='300' />
+        </td>
+        <td>150            <input type=hidden name='chlab5' value='150'>	
+        </td>
+        <td>Per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='1200' name='ch6' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample6' value="1" onchange="calculation();" /></td>
+      <td>Surface Tensiometer</td>
+      <td>Surface tension of liquids or powders</td>
+      <td>1200</td>
+        <td>300            <input type=hidden name='chuni6' value='300' />
+        </td>
+        <td>150            <input type=hidden name='chlab6' value='150'>	
+        </td>
+        <td>Per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='1100' name='ch7' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample7' value="1" onchange="calculation();" /></td>
+      <td>Impedance Analyzer</td>
+      <td>Impedance behavior of materials</td>
+      <td>1100</td>
+        <td>500            <input type=hidden name='chuni7' value='500' />
+        </td>
+        <td>250            <input type=hidden name='chlab7' value='250'>	
+        </td>
+        <td>Per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='1800' name='ch8' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample8' value="1" onchange="calculation();" /></td>
+      <td>TGA/DTA</td>
+      <td>Thermal stability of samples</td>
+      <td>1800</td>
+        <td>900            <input type=hidden name='chuni8' value='900' />
+        </td>
+        <td>450            <input type=hidden name='chlab8' value='450'>	
+        </td>
+        <td>Per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='2200' name='ch9' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample9' value="1" onchange="calculation();" /></td>
+      <td>Porosity Meter</td>
+      <td>Porosity of solid sample</td>
+      <td>2200</td>
+        <td>1000            <input type=hidden name='chuni9' value='1000' />
+        </td>
+        <td>450            <input type=hidden name='chlab9' value='450'>	
+        </td>
+        <td>Per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='1100' name='ch10' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample10' value="1" onchange="calculation();" /></td>
+      <td>Ellipsometer</td>
+      <td>Thickness and refractive index of thin film</td>
+      <td>1100</td>
+        <td>500            <input type=hidden name='chuni10' value='500' />
+        </td>
+        <td>250            <input type=hidden name='chlab10' value='250'>	
+        </td>
+        <td>Per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='3000' name='ch11' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample11' value="1" onchange="calculation();" /></td>
+      <td>Atomic Force Microscope</td>
+      <td>Surface morphology</td>
+      <td>3000</td>
+        <td>1500            <input type=hidden name='chuni11' value='1500' />
+        </td>
+        <td>750            <input type=hidden name='chlab11' value='750'>	
+        </td>
+        <td>Per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='3000' name='ch12' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample12' value="1" onchange="calculation();" /></td>
+      <td>Universal Testing Machine</td>
+      <td>Tensile testing</td>
+      <td>3000</td>
+        <td>1500            <input type=hidden name='chuni12' value='1500' />
+        </td>
+        <td>1100            <input type=hidden name='chlab12' value='1100'>	
+        </td>
+        <td>Per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='1500' name='ch13' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample13' value="1" onchange="calculation();" /></td>
+      <td>Pulse analyzer</td>
+      <td>Structural analysis </td>
+      <td>1500</td>
+        <td>600            <input type=hidden name='chuni13' value='600' />
+        </td>
+        <td>300            <input type=hidden name='chlab13' value='300'>	
+        </td>
+        <td>Per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='1500' name='ch14' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample14' value="1" onchange="calculation();" /></td>
+      <td>Elemental Analyzer</td>
+      <td>CHNS Analysis</td>
+      <td>1500</td>
+        <td>800            <input type=hidden name='chuni14' value='800' />
+        </td>
+        <td>400            <input type=hidden name='chlab14' value='400'>	
+        </td>
+        <td>Per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='1500' name='ch15' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample15' value="1" onchange="calculation();" /></td>
+      <td>Elemental Analyzer</td>
+      <td>Oxygen (O) Analysis</td>
+      <td>1500</td>
+        <td>800            <input type=hidden name='chuni15' value='800' />
+        </td>
+        <td>1500            <input type=hidden name='chlab15' value='1500'>	
+        </td>
+        <td>Per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='1800' name='ch16' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample16' value="1" onchange="calculation();" /></td>
+      <td>DSC</td>
+      <td>Thermal Study (RT to 500 degree C)</td>
+      <td>1800</td>
+        <td>900            <input type=hidden name='chuni16' value='900' />
+        </td>
+        <td>450            <input type=hidden name='chlab16' value='450'>	
+        </td>
+        <td>Per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='2200' name='ch17' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample17' value="1" onchange="calculation();" /></td>
+      <td>DSC</td>
+      <td>Thermal Study (-90 to RT)</td>
+      <td>2200</td>
+        <td>1200            <input type=hidden name='chuni17' value='1200' />
+        </td>
+        <td>600            <input type=hidden name='chlab17' value='600'>	
+        </td>
+        <td>Per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='750' name='ch18' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample18' value="1" onchange="calculation();" /></td>
+      <td>Colorimeter</td>
+      <td>Color measurement of powder or liquid samples</td>
+      <td>750</td>
+        <td>300            <input type=hidden name='chuni18' value='300' />
+        </td>
+        <td>150            <input type=hidden name='chlab18' value='150'>	
+        </td>
+        <td>Per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='800' name='ch19' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample19' value="1" onchange="calculation();" /></td>
+      <td>DLS</td>
+      <td>Particle Size</td>
+      <td>800</td>
+        <td>500            <input type=hidden name='chuni19' value='500' />
+        </td>
+        <td>250            <input type=hidden name='chlab19' value='250'>	
+        </td>
+        <td>Per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='800' name='ch20' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample20' value="1" onchange="calculation();" /></td>
+      <td>DLS</td>
+      <td>Zeta Potential</td>
+      <td>800</td>
+        <td>500            <input type=hidden name='chuni20' value='500' />
+        </td>
+        <td>250            <input type=hidden name='chlab20' value='250'>	
+        </td>
+        <td>Per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='800' name='ch21' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample21' value="1" onchange="calculation();" /></td>
+      <td>DLS</td>
+      <td>Molecular weight using SLS</td>
+      <td>800</td>
+        <td>500            <input type=hidden name='chuni21' value='500' />
+        </td>
+        <td>250            <input type=hidden name='chlab21' value='250'>	
+        </td>
+        <td>Per Sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='600' name='ch22' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample22' value="1" onchange="calculation();" /></td>
+      <td>SEM/EDS</td>
+      <td>Au/Pt Coating</td>
+      <td>600</td>
+        <td>500            <input type=hidden name='chuni22' value='500' />
+        </td>
+        <td>300            <input type=hidden name='chlab22' value='300'>	
+        </td>
+        <td>Per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='1200' name='ch23' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample23' value="1" onchange="calculation();" /></td>
+      <td>SEM</td>
+      <td>Surface morphology (Au/Pt Coating is essential for nonconducting sample)</td>
+      <td>1200</td>
+        <td>750            <input type=hidden name='chuni23' value='750' />
+        </td>
+        <td>450            <input type=hidden name='chlab23' value='450'>	
+        </td>
+        <td>Per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='600' name='ch24' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample24' value="1" onchange="calculation();" /></td>
+      <td>EDS (with SEM)</td>
+      <td>Element analysis (Au/Pt Coating is essential for nonconducting sample)</td>
+      <td>600</td>
+        <td>450            <input type=hidden name='chuni24' value='450' />
+        </td>
+        <td>450            <input type=hidden name='chlab24' value='450'>	
+        </td>
+        <td>Per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='3000' name='ch25' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample25' value="1" onchange="calculation();" /></td>
+      <td>LCMS/MS</td>
+      <td>MS</td>
+      <td>3000</td>
+        <td>1200            <input type=hidden name='chuni25' value='1200' />
+        </td>
+        <td>750            <input type=hidden name='chlab25' value='750'>	
+        </td>
+        <td>Per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='6000' name='ch26' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample26' value="1" onchange="calculation();" /></td>
+      <td>LCMS/MS</td>
+      <td>LCMS</td>
+      <td>6000</td>
+        <td>3000            <input type=hidden name='chuni26' value='3000' />
+        </td>
+        <td>1500            <input type=hidden name='chlab26' value='1500'>	
+        </td>
+        <td>Per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='1500' name='ch27' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample27' value="1" onchange="calculation();" /></td>
+      <td>XRD</td>
+      <td>SCD</td>
+      <td>1500</td>
+        <td>750            <input type=hidden name='chuni27' value='750' />
+        </td>
+        <td>400            <input type=hidden name='chlab27' value='400'>	
+        </td>
+        <td>Per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='1800' name='ch28' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample28' value="1" onchange="calculation();" /></td>
+      <td>XRD</td>
+      <td>SSD</td>
+      <td>1800</td>
+        <td>800            <input type=hidden name='chuni28' value='800' />
+        </td>
+        <td>450            <input type=hidden name='chlab28' value='450'>	
+        </td>
+        <td>Per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='1500' name='ch29' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample29' value="1" onchange="calculation();" /></td>
+      <td>XRD</td>
+      <td>Thin Film</td>
+      <td>1500</td>
+        <td>750            <input type=hidden name='chuni29' value='750' />
+        </td>
+        <td>400            <input type=hidden name='chlab29' value='400'>	
+        </td>
+        <td>Per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='4500' name='ch30' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample30' value="1" onchange="calculation();" /></td>
+      <td>XRD</td>
+      <td>HT</td>
+      <td>4500</td>
+        <td>1500            <input type=hidden name='chuni30' value='1500' />
+        </td>
+        <td>750            <input type=hidden name='chlab30' value='750'>	
+        </td>
+        <td>Per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='3000' name='ch31' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample31' value="1" onchange="calculation();" /></td>
+      <td>XRD</td>
+      <td>SAXS</td>
+      <td>3000</td>
+        <td>1500            <input type=hidden name='chuni31' value='1500' />
+        </td>
+        <td>750            <input type=hidden name='chlab31' value='750'>	
+        </td>
+        <td>Per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='2200' name='ch32' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample32' value="1" onchange="calculation();" /></td>
+      <td>XRD</td>
+      <td>Liquid</td>
+      <td>2200</td>
+        <td>800            <input type=hidden name='chuni32' value='800' />
+        </td>
+        <td>450            <input type=hidden name='chlab32' value='450'>	
+        </td>
+        <td>Per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='1500' name='ch33' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample33' value="1" onchange="calculation();" /></td>
+      <td>ICP-OES</td>
+      <td>Microwave Sample Digestion</td>
+      <td>1500</td>
+        <td>1000            <input type=hidden name='chuni33' value='1000' />
+        </td>
+        <td>750            <input type=hidden name='chlab33' value='750'>	
+        </td>
+        <td>Per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='1800' name='ch34' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample34' value="1" onchange="calculation();" /></td>
+      <td>ICP-OES</td>
+      <td>Analysis of 1st Element</td>
+      <td>1800</td>
+        <td>1200            <input type=hidden name='chuni34' value='1200' />
+        </td>
+        <td>600            <input type=hidden name='chlab34' value='600'>	
+        </td>
+        <td>Per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='600' name='ch35' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample35' value="1" onchange="calculation();" /></td>
+      <td>ICP-OES</td>
+      <td>For every additional element</td>
+      <td>600</td>
+        <td>300            <input type=hidden name='chuni35' value='300' />
+        </td>
+        <td>150            <input type=hidden name='chlab35' value='150'>	
+        </td>
+        <td>Per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='2200' name='ch36' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample36' value="1" onchange="calculation();" /></td>
+      <td>GPC</td>
+      <td>Water /buffer as solvent</td>
+      <td>2200</td>
+        <td>900            <input type=hidden name='chuni36' value='900' />
+        </td>
+        <td>450            <input type=hidden name='chlab36' value='450'>	
+        </td>
+        <td>per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='3000' name='ch37' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample37' value="1" onchange="calculation();" /></td>
+      <td>GPC</td>
+      <td>Toluene/THF solvent</td>
+      <td>3000</td>
+        <td>1200            <input type=hidden name='chuni37' value='1200' />
+        </td>
+        <td>600            <input type=hidden name='chlab37' value='600'>	
+        </td>
+        <td>per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='750' name='ch38' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample38' value="1" onchange="calculation();" /></td>
+      <td>Raman Spectrometer (Physics)</td>
+      <td>Functional group analysis</td>
+      <td>750</td>
+        <td>500            <input type=hidden name='chuni38' value='500' />
+        </td>
+        <td>250            <input type=hidden name='chlab38' value='250'>	
+        </td>
+        <td>per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='3000' name='ch39' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample39' value="1" onchange="calculation();" /></td>
+      <td>Semiconductor Characterization Unit (Physics)</td>
+      <td>Material analysis</td>
+      <td>3000</td>
+        <td>1000            <input type=hidden name='chuni39' value='1000' />
+        </td>
+        <td>500            <input type=hidden name='chlab39' value='500'>	
+        </td>
+        <td>per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='6000' name='ch40' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample40' value="1" onchange="calculation();" /></td>
+      <td>GCMS (Bio Engg.)</td>
+      <td>Separation and Mass detection</td>
+      <td>6000</td>
+        <td>3000            <input type=hidden name='chuni40' value='3000' />
+        </td>
+        <td>1500            <input type=hidden name='chlab40' value='1500'>	
+        </td>
+        <td>per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='4500' name='ch41' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample41' value="1" onchange="calculation();" /></td>
+      <td>Atomic Absorption Spectroscopy (AAS) (Chemical Engg.)</td>
+      <td>Elemental Analaysis</td>
+      <td>4500</td>
+        <td>1500            <input type=hidden name='chuni41' value='1500' />
+        </td>
+        <td>750            <input type=hidden name='chlab41' value='750'>	
+        </td>
+        <td>per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='3000' name='ch42' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample42' value="1" onchange="calculation();" /></td>
+      <td>Dynamic Mechanical Analyser (DMA) (Chemical Engg.)</td>
+      <td>Mechanical loss factor</td>
+      <td>3000</td>
+        <td>1200            <input type=hidden name='chuni42' value='1200' />
+        </td>
+        <td>600            <input type=hidden name='chlab42' value='600'>	
+        </td>
+        <td>per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='5000' name='ch43' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample43' value="1" onchange="calculation();" /></td>
+      <td>Gas Chromatography (GC) (Chemical Engg.)</td>
+      <td>Separation of compounds</td>
+      <td>5000</td>
+        <td>2000            <input type=hidden name='chuni43' value='2000' />
+        </td>
+        <td>1000            <input type=hidden name='chlab43' value='1000'>	
+        </td>
+        <td>per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='5000' name='ch44' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample44' value="1" onchange="calculation();" /></td>
+      <td>Chemisorption (Chemical Engg.)</td>
+      <td>Surface property</td>
+      <td>5000</td>
+        <td>2000            <input type=hidden name='chuni44' value='2000' />
+        </td>
+        <td>1000            <input type=hidden name='chlab44' value='1000'>	
+        </td>
+        <td>per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='600' name='ch45' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample45' value="1" onchange="calculation();" /></td>
+      <td>Field Emission Scanning Electron Microscope (FESEM)</td>
+      <td>Au/Pt Coating</td>
+      <td>600</td>
+        <td>500            <input type=hidden name='chuni45' value='500' />
+        </td>
+        <td>300            <input type=hidden name='chlab45' value='300'>	
+        </td>
+        <td>per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='1500' name='ch46' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample46' value="1" onchange="calculation();" /></td>
+      <td>FESEM</td>
+      <td>Surface morphology</td>
+      <td>1500</td>
+        <td>1000            <input type=hidden name='chuni46' value='1000' />
+        </td>
+        <td>500            <input type=hidden name='chlab46' value='500'>	
+        </td>
+        <td>per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='600' name='ch47' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample47' value="1" onchange="calculation();" /></td>
+      <td>FESEM</td>
+      <td>Elemental analysis</td>
+      <td>600</td>
+        <td>500            <input type=hidden name='chuni47' value='500' />
+        </td>
+        <td>500            <input type=hidden name='chlab47' value='500'>	
+        </td>
+        <td>per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='5000' name='ch48' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample48' value="1" onchange="calculation();" /></td>
+      <td>Prep HPLC</td>
+      <td>Purification of compounds</td>
+      <td>5000</td>
+        <td>2000            <input type=hidden name='chuni48' value='2000' />
+        </td>
+        <td>1000            <input type=hidden name='chlab48' value='1000'>	
+        </td>
+        <td>per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='5000' name='ch49' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample49' value="1" onchange="calculation();" /></td>
+      <td>HPLC (Pharmacy)</td>
+      <td>Seperation of compounds</td>
+      <td>5000</td>
+        <td>2000            <input type=hidden name='chuni49' value='2000' />
+        </td>
+        <td>1000            <input type=hidden name='chlab49' value='1000'>	
+        </td>
+        <td>per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='1000' name='ch50' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample50' value="1" onchange="calculation();" /></td>
+      <td>Microhardness Tester (Mechanical)</td>
+      <td>Hardness test</td>
+      <td>1000</td>
+        <td>500            <input type=hidden name='chuni50' value='500' />
+        </td>
+        <td>250            <input type=hidden name='chlab50' value='250'>	
+        </td>
+        <td>per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='1000' name='ch51' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample51' value="1" onchange="calculation();" /></td>
+      <td>Brinell Hardness Tester (Mechanical)</td>
+      <td>Hardness test</td>
+      <td>1000</td>
+        <td>500            <input type=hidden name='chuni51' value='500' />
+        </td>
+        <td>250            <input type=hidden name='chlab51' value='250'>	
+        </td>
+        <td>per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='1800' name='ch52' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample52' value="1" onchange="calculation();" /></td>
+      <td>Simultaneous Thermal Analyser (Space Engg. and Rocketry)</td>
+      <td>Thermal Stability of samples</td>
+      <td>1800</td>
+        <td>900            <input type=hidden name='chuni52' value='900' />
+        </td>
+        <td>450            <input type=hidden name='chlab52' value='450'>	
+        </td>
+        <td>per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='1000' name='ch53' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample53' value="1" onchange="calculation();" /></td>
+      <td>UV-Vis NIR Spectrometer (Chemistry)</td>
+      <td>Absorption spectra</td>
+      <td>1000</td>
+        <td>500            <input type=hidden name='chuni53' value='500' />
+        </td>
+        <td>250            <input type=hidden name='chlab53' value='250'>	
+        </td>
+        <td>per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='2200' name='ch54' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample54' value="1" onchange="calculation();" /></td>
+      <td>NMR 400 (Chemistry)</td>
+      <td>1H,19F,31P NMR</td>
+      <td>2200</td>
+        <td>900            <input type=hidden name='chuni54' value='900' />
+        </td>
+        <td>300            <input type=hidden name='chlab54' value='300'>	
+        </td>
+        <td>per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='4500' name='ch55' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample55' value="1" onchange="calculation();" /></td>
+      <td>NMR 400 (Chemistry)</td>
+      <td>13C NMR</td>
+      <td>4500</td>
+        <td>1800            <input type=hidden name='chuni55' value='1800' />
+        </td>
+        <td>600            <input type=hidden name='chlab55' value='600'>	
+        </td>
+        <td>per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='4500' name='ch56' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample56' value="1" onchange="calculation();" /></td>
+      <td>NMR 400 (Chemistry)</td>
+      <td>COSY/NOESY, HSQC,HMBC,TOCSY</td>
+      <td>4500</td>
+        <td>1800            <input type=hidden name='chuni56' value='1800' />
+        </td>
+        <td>600            <input type=hidden name='chlab56' value='600'>	
+        </td>
+        <td>per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='2000' name='ch57' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample57' value="1" onchange="calculation();" /></td>
+      <td>Autolab 302N with Solarsimulator (Chemistry)</td>
+      <td>Basic parameters</td>
+      <td>2000</td>
+        <td>1000            <input type=hidden name='chuni57' value='1000' />
+        </td>
+        <td>500            <input type=hidden name='chlab57' value='500'>	
+        </td>
+        <td>per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='5000' name='ch58' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample58' value="1" onchange="calculation();" /></td>
+      <td>UPLC (Bio Engg.)</td>
+      <td>Seperation of compound</td>
+      <td>5000</td>
+        <td>2000            <input type=hidden name='chuni58' value='2000' />
+        </td>
+        <td>1000            <input type=hidden name='chlab58' value='1000'>	
+        </td>
+        <td>per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='5000' name='ch59' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample59' value="1" onchange="calculation();" /></td>
+      <td>UHPLC (Bio Engg.)</td>
+      <td>Separation of compounds</td>
+      <td>5000</td>
+        <td>2000            <input type=hidden name='chuni59' value='2000' />
+        </td>
+        <td>1000            <input type=hidden name='chlab59' value='1000'>	
+        </td>
+        <td>per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='5000' name='ch60' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample60' value="1" onchange="calculation();" /></td>
+      <td>HPTLC</td>
+      <td>Separation of compounds</td>
+      <td>5000</td>
+        <td>2000            <input type=hidden name='chuni60' value='2000' />
+        </td>
+        <td>1000            <input type=hidden name='chlab60' value='1000'>	
+        </td>
+        <td>per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='5000' name='ch61' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample61' value="1" onchange="calculation();" /></td>
+      <td>Analytical HPLC</td>
+      <td>Seperation of compounds</td>
+      <td>5000</td>
+        <td>2000            <input type=hidden name='chuni61' value='2000' />
+        </td>
+        <td>1000            <input type=hidden name='chlab61' value='1000'>	
+        </td>
+        <td>per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='750' name='ch62' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample62' value="1" onchange="calculation();" /></td>
+      <td>Anodic Stripping Voltametry (ASV)</td>
+      <td>Elemental analysis</td>
+      <td>750</td>
+        <td>300            <input type=hidden name='chuni62' value='300' />
+        </td>
+        <td>150            <input type=hidden name='chlab62' value='150'>	
+        </td>
+        <td>per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='1000' name='ch63' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample63' value="1" onchange="calculation();" /></td>
+      <td>Laser Diffraction Particle Size Analyser (Civil and Env. Engg)</td>
+      <td>Particle Size </td>
+      <td>1000</td>
+        <td>500            <input type=hidden name='chuni63' value='500' />
+        </td>
+        <td>250            <input type=hidden name='chlab63' value='250'>	
+        </td>
+        <td>per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='1000' name='ch64' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample64' value="1" onchange="calculation();" /></td>
+      <td>Single Crystal XRD</td>
+      <td>Data collection</td>
+      <td>1000</td>
+        <td>4000            <input type=hidden name='chuni64' value='4000' />
+        </td>
+        <td>2000            <input type=hidden name='chlab64' value='2000'>	
+        </td>
+        <td>per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='5000' name='ch65' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample65' value="1" onchange="calculation();" /></td>
+      <td>Flash Chromatography</td>
+      <td>Purification of compounds</td>
+      <td>5000</td>
+        <td>2000            <input type=hidden name='chuni65' value='2000' />
+        </td>
+        <td>1000            <input type=hidden name='chlab65' value='1000'>	
+        </td>
+        <td>per hour</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='4000' name='ch66' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample66' value="1" onchange="calculation();" /></td>
+      <td>Ion Chromatography</td>
+      <td>Elemental Analysis</td>
+      <td>4000</td>
+        <td>1500            <input type=hidden name='chuni66' value='1500' />
+        </td>
+        <td>750            <input type=hidden name='chlab66' value='750'>	
+        </td>
+        <td>per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='400' name='ch67' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample67' value="1" onchange="calculation();" /></td>
+      <td>Ion Chromatography</td>
+      <td>For every additional element</td>
+      <td>400</td>
+        <td>200            <input type=hidden name='chuni67' value='200' />
+        </td>
+        <td>100            <input type=hidden name='chlab67' value='100'>	
+        </td>
+        <td>per additional element</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='2000' name='ch68' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample68' value="1" onchange="calculation();" /></td>
+      <td>TGA-DSC</td>
+      <td>Thermal stability of samples</td>
+      <td>2000</td>
+        <td>1000            <input type=hidden name='chuni68' value='1000' />
+        </td>
+        <td>500            <input type=hidden name='chlab68' value='500'>	
+        </td>
+        <td>per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        <tr class ="trclass">
+        <td><input type="checkbox" value ='4000' name='ch69' onclick="HighlightSelectedRow($(this));" /></td>
+       <td><input size="3" type="text" name='sample69' value="1" onchange="calculation();" /></td>
+      <td>TGA-DSC</td>
+      <td>Specific heat capacity</td>
+      <td>4000</td>
+        <td>2000            <input type=hidden name='chuni69' value='2000' />
+        </td>
+        <td>1000            <input type=hidden name='chlab69' value='1000'>	
+        </td>
+        <td>per sample</td>
+        
+        <!--<td></td>-->
+    </tr>
+ 
+    </tbody>
+        </table>
+ </div>
+ </div>
+     </center>                                           
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 100px; height: 30px">&nbsp;</td>
+                                            <td class="style6" style="height: 30px">&nbsp;</td>
+                                            <td style="width: 35px; height: 30px">&nbsp;</td>
+                                        </tr>
+                                    </table>
+                           
+    <script>
+        function pageLoad(sender, args) {
+            function HighlightSelectedRow(cb) {
+                var selectedRow = $(cb).parent().parent();
+                if ($(cb).is(":checked")) {
+                    $(selectedRow).prop('class', 'backg')
+                }
+                else {
+                    $(selectedRow).prop('class', 'normal')
+                }
+            }
+        }
+    </script>
+    </form>
+</body>
+</html>

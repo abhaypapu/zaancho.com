@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://zaancho.godaddysites.com</id>
+    <title>Zaancho</title>
+    <updated>2021-09-04T07:35:09Z</updated>
+    <generator>Zaancho</generator>
+    <author>
+        <name>Zaancho</name>
+    </author>
+    <link rel="alternate" href="https://zaancho.godaddysites.com"/>
+    <link rel="self" href="https://zaancho.godaddysites.com/f"/>
+    <subtitle>Zaancho</subtitle>
+    <entry>
+        <title type="html"><![CDATA[Importance of Material Characterization in Research]]></title>
+        <id>importance-of-testing-in-material-science</id>
+        <link href="https://zaancho.godaddysites.com/f/importance-of-testing-in-material-science">
+        </link>
+        <updated>2021-09-04T07:35:09Z</updated>
+        <content type="html"><![CDATA[<img src="https://img1.wsimg.com/isteam/stock/25818"/><p>The industrialized prosperity and living standards of any nation, to a major extent depend on the rapid transfer of technical innovations into marketable products. The continuing evolution of the different materials (e.g...</p>]]></content>
+    </entry>
+</feed>
